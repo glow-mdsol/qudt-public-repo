@@ -1074,7 +1074,8 @@ qudt:OrdinalScale-order
   a sh:PropertyShape ;
   sh:path qudt:order ;
   rdfs:isDefinedBy <http://qudt.org/2.1/schema/shacl/qudt> ;
-  sh:datatype xsd:nonNegativeInteger ;
+  sh:datatype xsd:integer ;
+  sh:minValue 0 ;
   sh:maxCount 1 ;
   sh:minCount 1 ;
 .
@@ -1599,7 +1600,7 @@ qudt:QuantityKindDimensionVector_SI
 qudt:QuantityType
   a rdfs:Class ;
   a sh:NodeShape ;
-  dcterms:description "\\(\\textit{Quantity Type}\\) is an enumeration of quanity kinds. It specializes \\(\\boxed{dtype:EnumeratedValue}\\) by constrinaing \\(\\boxed{dtype:value}\\) to instances of \\(\\boxed{qudt:QuantityKind}\\)."^^qudt:LatexString ;
+  dcterms:description "\\(\\textit{Quantity Type}\\) is an enumeration of quanity kinds. It specializes \\(\\boxed{dtype:EnumeratedValue}\\) by constraining \\(\\boxed{dtype:value}\\) to instances of \\(\\boxed{qudt:QuantityKind}\\)."^^qudt:LatexString ;
   rdfs:isDefinedBy <http://qudt.org/2.1/schema/shacl/qudt> ;
   rdfs:label "Quantity type" ;
   rdfs:subClassOf qudt:EnumeratedValue ;
@@ -2696,25 +2697,30 @@ qudt:figureLabel
 qudt:floatPercentage
   a rdfs:Datatype ;
   a sh:NodeShape ;
+  dcterms:description "a floating point value in the range of 0.00 to 100.00" ;
   rdfs:isDefinedBy <http://qudt.org/2.1/schema/shacl/qudt> ;
   rdfs:label "float percentage" ;
   rdfs:subClassOf xsd:float ;
-  owl:equivalentClass [
-      a rdfs:Datatype ;
-      owl:onDatatype xsd:float ;
-      owl:withRestrictions (
-          [
-            xsd:minInclusive "0.00"^^xsd:float ;
-          ]
-          [
-            xsd:maxInclusive "100.00"^^xsd:float ;
-          ]
-        ) ;
-    ] ;
+.
+qudt:floatPercentageShape
+  a sh:NodeShape ;
+	sh:targetObjectsOf qudt:floatPercentage ;
+  dcterms:description "constrains a floating point value to the range of 0.00 to 100.00" ;
+  rdfs:isDefinedBy <http://qudt.org/2.1/schema/shacl/qudt> ;
+  rdfs:label "float percentage shape" ;
+  sh:property qudt:floatPercentageShape-value ;
+  .
+qudt:floatPercentageShape-value
+  a sh:PropertyShape ;
+  rdfs:isDefinedBy <http://qudt.org/2.1/schema/shacl/qudt> ;
+  sh:path qudt:floatPercentage ;
+  sh:minValue 0.00^^xsd:float ;
+  sh:maxValue 100.00^^xsd:float ;
 .
 qudt:generalization
   a rdf:Property ;
-  dcterms:description """This property relates a quantity kind to its generalization. A quantity kind, PARENT, is a generalization of the quantity kind CHILD only if:
+  dcterms:description """This property relates a quantity kind to its generalization. 
+  A quantity kind, PARENT, is a generalization of the quantity kind CHILD only if:
 
 1. PARENT and CHILD have the same dimensions in every system of quantities;
 2. Every unit that is a measure of quantities of kind CHILD is also a valid measure of quantities of kind PARENT."""^^rdf:HTML ;
@@ -2890,22 +2896,25 @@ qudt:informativeReference
 qudt:integerPercentage
   a rdfs:Datatype ;
   a sh:NodeShape ;
+  dcterms:description "Constrains an integer to the range 0 to 100" ;
   rdfs:isDefinedBy <http://qudt.org/2.1/schema/shacl/qudt> ;
   rdfs:label "integer percentage" ;
   rdfs:subClassOf xsd:integer ;
-  owl:equivalentClass [
-      a rdfs:Datatype ;
-      rdfs:isDefinedBy <http://qudt.org/2.1/schema/shacl/qudt> ;
-      owl:onDatatype xsd:integer ;
-      owl:withRestrictions (
-          [
-            xsd:minInclusive 0 ;
-          ]
-          [
-            xsd:maxInclusive 100 ;
-          ]
-        ) ;
-    ] ;
+.
+qudt:integerPercentageShape
+  a sh:NodeShape ;
+	sh:targetObjectsOf qudt:integerPercentage ;
+  dcterms:description "constrains an integer value to the range of 0 to 100" ;
+  rdfs:isDefinedBy <http://qudt.org/2.1/schema/shacl/qudt> ;
+  rdfs:label "integer percentage shape" ;
+  sh:property qudt:integerPercentageShape-value ;
+  .
+qudt:integerPercentageShape-value
+  a sh:PropertyShape ;
+  rdfs:isDefinedBy <http://qudt.org/2.1/schema/shacl/qudt> ;
+  sh:path qudt:integerPercentage ;
+  sh:minValue 0 ;
+  sh:maxValue 100 ;
 .
 qudt:isBaseQuantityKindOfSystem
   a rdf:Property ;
